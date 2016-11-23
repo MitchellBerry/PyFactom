@@ -13,8 +13,8 @@ class Factom(object):
         fctwallet: Starts wallet binary                                                                       (Bool)
         showbin: Opens binaries in console, if false run as background process, stdout passed to python.      (Bool)
         binpath: Required if binaries aren't in PATH                                                          (String)
-        daemonport: Use for alternate port, defaults to 8088                                                  (String)
-        walletport: Use for alternate port, defaults to 8089                                                  (String)
+        daemonport: If using alternate port, default 8088                                                     (String)
+        walletport: If using alternate port, default 8089                                                     (String)
     """
     def __init__(self, factomd=False, fctwallet=False, binpath='', daemonport='8088', walletport='8089', showbin=True):
         self.binpath = binpath
@@ -52,7 +52,7 @@ class Factom(object):
         if self.fctwallet:
             print('Closing fctwallet')
             self.fctwallet.kill()
-        self.factomd, self.fctwallet = None, None #stops error on repeat attempts
+        self.factomd, self.fctwallet = None, None
 
     #############
     # Functions #
@@ -78,7 +78,7 @@ class Factom(object):
         return self.apiquery('factoid-add-output/', method='POST', data=data, port=self.wport)
 
     def balances(self, json=True):
-        """returns json if necessary - {'Factoids':{Address:{Name, Amount}, 'EntryCredits':{Address:{Name, Amount}}"""
+        """JSON format - {'Factoids':{Address:{Name, Amount}, 'EntryCredits':{Address:{Name, Amount}}"""
         query = self.apiquery('factoid-get-addresses/', port=self.wport)
         if json:
             return self.jsonbalances(query)
