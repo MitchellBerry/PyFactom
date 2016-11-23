@@ -12,7 +12,7 @@ class Factom(object):
         factomd: Starts daemon binary                                                                         (Bool)
         fctwallet: Starts wallet binary                                                                       (Bool)
         showbin: Opens binaries in console, if false run as background process, stdout passed to python.      (Bool)
-        binpath: Required if binaries aren't in PATH                                                            (String)
+        binpath: Required if binaries aren't in PATH                                                          (String)
         daemonport: Use for alternate port, defaults to 8088                                                  (String)
         walletport: Use for alternate port, defaults to 8089                                                  (String)
     """
