@@ -26,13 +26,10 @@ class Factom(object):
 
     def apiquery(self, command, port, method='GET', data=None, json=None, params=None, headers=None):
         url = 'http://localhost:' + port + '/v1/' + command
-        print(url)
-        print(data)
-        print(json)
         try:
             return requests.request(method, url, data=data, json=json, params=params, headers=headers).json()
         except requests.ConnectionError:
-            print('Error connecting to port: ' + port + ' - Check factomd/fctwallet is running')
+            ('Error connecting to port: ' + port + ' - Check factomd/fctwallet is running')
             return False
 
     def startbinaries(self, factomd, fctwallet, showbinaries=True):
@@ -127,7 +124,6 @@ class Factom(object):
     def ecbalance_d(self, ecaddress):
         """ Returns Entry Credit balance from daemon, address only"""
         hexaddress = bytearray(ecaddress, 'UTF-8').hex()
-        print('hexaddress: ', hexaddress) #TODO: test
         return self.apiquery('entry-credit-balance/' + hexaddress, port=self.dport)
 
     def factoidbalance(self, fctaddress):
@@ -191,9 +187,7 @@ class Factom(object):
     def createchain(self, ecaddress, extids, content):
         """Creates a new chain, first extid is chain name, content contains chain description"""
         compose = self.composechain(ecaddress, extids, content)
-        print(compose)
         a = compose['ChainCommit']
-        print(a)
         commit = self.commitchain()
         time.sleep(2)
         reveal = self.revealchain(compose['ChainCommit'])
