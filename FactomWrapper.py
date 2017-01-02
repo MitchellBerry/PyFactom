@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # python > 3.5
 import time
 import requests
@@ -18,7 +18,7 @@ class Factom(object):
     """
     def __init__(self, factomd=False, fctwallet=False, binpath='', daemonport='8088', walletport='8089', showbin=True):
         self.binpath = binpath
-        self.factomd, self.fctwallet = None, None  # one-line fix for NameError exceptions on close
+        self.factomd, self.fctwallet = None, None
         self.dport, self.wport = daemonport, walletport
         self.headers = {'Content-type': 'application/json'}
         if factomd or fctwallet:
@@ -90,7 +90,6 @@ class Factom(object):
 
     def composechain(self, ecaddress, extids, content=''):
         params = {"ExtIDs": extids, "Content": content}
-        data = [('ExtIDs', extids), ('Content', content)]
         return self.apiquery('compose-chain-submit/' + ecaddress, method='POST', json=params, port=self.wport,
                              headers=self.headers)
 
@@ -263,11 +262,12 @@ class Factom(object):
         return round(1/float(self.getfee()))
 
     def jsonbalances(self, balances):
+        """Returns balances string in JSON"""
+        factoids, entrycredits = {}, {}
+        i = 2
         try:
             balances = balances['Response'].split()
-            factoids, entrycredits = {}, {}
-            i = 2
-            while balances[i] + balances[i+1] != 'Entry' + 'Credit':
+            while balances[i] != 'Entry':
                 name, address, amount = balances[i], balances[i+1], balances[i+2]
                 factoids[address] = {'Name': name, 'Amount': amount}
                 i += 3
