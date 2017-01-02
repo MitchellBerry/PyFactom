@@ -1,5 +1,5 @@
 # PyFactom
-Python Wrapper for the Factom v1 API
+Python Wrapper for the Factom v2 API
 
 Requires the Factom binaries found here: https://github.com/FactomProject/distribution
 
